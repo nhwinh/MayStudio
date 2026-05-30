@@ -1,119 +1,268 @@
-// ==========================================
-// 1. SLIDESHOW TỰ ĐỘNG CHUYỂN ẢNH MỖI 10 GIÂY
-// ==========================================
-const slides = document.querySelectorAll('.slide-item');
-const progressBar = document.getElementById('slideProgress');
-let currentSlideIndex = 0;
-let slideInterval;
-
-function startSlideshow() {
-    // Reset thanh thời gian chạy ngầm
-    progressBar.style.transition = 'none';
-    progressBar.style.width = '0%';
-    
-    // Tạo hiệu ứng chạy đầy thanh trong 10s (10000ms)
-    setTimeout(() => {
-        progressBar.style.transition = 'width 10000ms linear';
-        progressBar.style.width = '100%';
-    }, 50);
-
-    // Hết 10 giây tự động đổi lớp active qua slide kế tiếp
-    slideInterval = setTimeout(() => {
-        slides[currentSlideIndex].classList.remove('active');
-        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-        slides[currentSlideIndex].classList.add('active');
-        startSlideshow();
-    }, 10000);
-}
-// Chạy hàm ngay khi tải trang
-startSlideshow();
-
-
-// ==========================================
-// 2. LOGIC TÍNH TOÁN VÀ ĐIỀU KHIỂN GIỎ HÀNG
-// ==========================================
-let cartItems = [];
-
-// Mở thanh trượt giỏ hàng bên phải
-function openCartDrawer() {
-    document.getElementById('cartDrawer').classList.add('open');
-    document.getElementById('bodyOverlay').classList.add('active');
+:root {
+    --may-bg: #fffdfa;
+    --may-brown: #4a3733;
+    --may-rose: #bd897e;
+    --may-sale: #b83b26;
+    --may-hot: #e69c24;
+    --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-// Đóng thanh trượt giỏ hàng
-function closeCartDrawer() {
-    document.getElementById('cartDrawer').classList.remove('open');
-    document.getElementById('bodyOverlay').classList.remove('active');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Thêm sản phẩm vào mảng giỏ hàng
-function insertToCart(name, price, img) {
-    const existingItem = cartItems.find(item => item.name === name);
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cartItems.push({ name, price, img, quantity: 1 });
-    }
-    renderCart();
-    openCartDrawer();
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--may-brown);
+    background-color: var(--may-bg);
+    line-height: 1.6;
+    overflow-x: hidden;
 }
 
-// Xóa hẳn sản phẩm khỏi giỏ hàng
-function removeFromCart(name) {
-    cartItems = cartItems.filter(item => item.name !== name);
-    renderCart();
+h1, h2, h3, h4, .logo-text, .footer-logo { 
+    font-family: 'Playfair Display', serif; 
 }
 
-// Cập nhật HTML giao diện của giỏ hàng trượt
-function renderCart() {
-    const contentBox = document.getElementById('cartDrawerContent');
-    const counterText = document.getElementById('cart-counter-text');
-    const totalText = document.getElementById('cartDrawerTotal');
-    
-    contentBox.innerHTML = '';
-    let totalAmount = 0;
-    let totalQuantity = 0;
-
-    cartItems.forEach(item => {
-        totalAmount += item.price * item.quantity;
-        totalQuantity += item.quantity;
-
-        contentBox.innerHTML += `
-            <div class="drawer-item">
-                <img src="${item.img}" alt="${item.name}">
-                <div class="drawer-item-details">
-                    <h5>${item.name}</h5>
-                    <p>${item.price.toLocaleString('vi-VN')}₫ x ${item.quantity}</p>
-                    <span onclick="removeFromCart('${item.name}')" style="color:#b83b26; font-size:11px; cursor:pointer; text-decoration:underline;">Xóa bỏ</span>
-                </div>
-            </div>
-        `;
-    });
-
-    counterText.innerText = totalQuantity;
-    totalText.innerText = totalAmount.toLocaleString('vi-VN') + '₫';
+.main-header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    background-color: rgba(255, 253, 250, 0.96);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(74, 55, 51, 0.06);
 }
 
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-// ==========================================
-// 3. XỬ LÝ LỌC DANH MỤC SẢN PHẨM KHÔNG TẢI LẠI TRANG
-// ==========================================
-function filterProducts(category) {
-    const productCards = document.querySelectorAll('#danh-muc-vay .product-card');
-    
-    productCards.forEach(card => {
-        const productName = card.querySelector('h3').innerText.toLowerCase();
-        
-        if (category === 'all') {
-            card.style.display = 'block';
-        } else if (category === 'dam' && (productName.includes('đầm') || productName.includes('midi'))) {
-            card.style.display = 'block';
-        } else if (category === 'bien' && productName.includes('biển')) {
-            card.style.display = 'block';
-        } else if (category === 'chanvay' && productName.includes('chân váy')) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
-    });
+.logo-text {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--may-brown);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.logo-text span {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--may-rose);
+}
+
+.navigation .nav-level-1 { 
+    display: flex; 
+    gap: 30px; 
+    align-items: center; 
+}
+
+.nav-level-1 > li { 
+    position: relative; 
+    padding: 10px 0; 
+}
+
+.nav-key {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #705b57;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.nav-key:hover { color: var(--may-rose); }
+
+.nav-level-2 {
+    position: absolute;
+    top: 100%; left: 0;
+    background-color: var(--may-bg);
+    border: 1px solid rgba(74, 55, 51, 0.1);
+    padding: 15px;
+    min-width: 220px;
+    display: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.nav-level-2 li { margin-bottom: 10px; }
+.nav-level-2 li:last-child { margin-bottom: 0; }
+
+.nav-level-2 a {
+    font-size: 13px;
+    color: var(--may-brown);
+    text-decoration: none;
+    display: block;
+    transition: var(--transition);
+}
+
+.nav-level-2 a:hover { color: var(--may-rose); padding-left: 5px; }
+.nav-level-1 > li:hover .nav-level-2 { display: block; }
+
+.search-wrapper {
+    position: relative;
+    width: 260px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 15px 8px 35px;
+    border-radius: 30px;
+    border: 1px solid rgba(74, 55, 51, 0.15);
+    background-color: #fff;
+    font-size: 12px;
+    outline: none;
+    color: var(--may-brown);
+}
+
+.search-icon { position: absolute; left: 14px; top: 52%; transform: translateY(-50%); opacity: 0.6; font-size: 12px; }
+
+.cart-trigger {
+    background: none; border: none;
+    cursor: pointer; font-size: 13px;
+    color: var(--may-brown); font-family: inherit;
+    letter-spacing: 1px;
+}
+
+.slideshow-container {
+    position: relative;
+    height: 75vh;
+    margin-top: 75px;
+    overflow: hidden;
+}
+
+.slide-item {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+}
+
+.slide-item::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(74, 55, 51, 0.15);
+}
+
+.slide-item.active { opacity: 1; z-index: 1; }
+
+.slide-text {
+    position: relative; z-index: 2;
+    color: #fff; text-align: center;
+    padding: 0 20px;
+}
+
+.slide-text h2 { font-size: 50px; font-weight: 400; font-style: italic; margin-bottom: 15px; letter-spacing: 1px; }
+.slide-text p { font-size: 13px; text-transform: uppercase; letter-spacing: 3px; }
+
+.time-progress-bar {
+    position: absolute; bottom: 0; left: 0;
+    height: 3px; background-color: var(--may-rose);
+    z-index: 3; width: 0%;
+}
+
+.section-wrapper { max-width: 1300px; margin: 70px auto; padding: 0 20px; }
+
+.section-title-box { text-align: center; margin-bottom: 45px; }
+.section-title-box h2 { font-size: 30px; font-style: italic; color: var(--may-brown); font-weight: 400; }
+.section-title-box p { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #9c8784; margin-top: 5px; }
+
+.product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+
+.product-card { background: #fff; border: 1px solid rgba(74, 55, 51, 0.05); position: relative; transition: var(--transition); }
+.product-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(74, 55, 51, 0.04); }
+
+.sale-tag {
+    position: absolute; top: 15px; left: 15px;
+    background-color: var(--may-sale); color: #fff;
+    padding: 3px 8px; font-size: 11px; font-weight: 600;
+    z-index: 5; letter-spacing: 1px;
+}
+
+.hot-tag {
+    position: absolute; top: 15px; left: 15px;
+    background-color: var(--may-hot); color: #fff;
+    padding: 3px 8px; font-size: 11px; font-weight: 600;
+    z-index: 5; letter-spacing: 1px;
+}
+
+.img-box { position: relative; padding-top: 135%; overflow: hidden; }
+.img-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+
+.info-box { padding: 20px; text-align: center; }
+.info-box h3 { font-size: 15px; font-weight: 400; margin-bottom: 8px; color: var(--may-brown); }
+
+.price-box { margin-bottom: 15px; font-size: 14px; }
+.price-new { font-weight: 600; color: var(--may-brown); }
+.price-old { color: #a3928f; text-decoration: line-through; margin-left: 8px; font-size: 12px; }
+
+.btn-add-cart {
+    width: 100%; padding: 11px;
+    background-color: var(--may-brown); color: #fff;
+    border: none; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 1px; cursor: pointer; transition: var(--transition);
+}
+.btn-add-cart:hover { background-color: var(--may-rose); }
+
+.cart-drawer {
+    position: fixed; top: 0; right: -400px;
+    width: 400px; height: 100%;
+    background: #fff; z-index: 2000;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.05);
+    transition: var(--transition);
+    display: flex; flex-direction: column; padding: 30px;
+}
+
+.cart-drawer.open { right: 0; }
+
+.cart-title-area { 
+    display: flex; justify-content: space-between; align-items: center; 
+    margin-bottom: 25px; border-bottom: 1px solid rgba(74, 55, 51, 0.1); padding-bottom: 15px; 
+}
+
+.cart-close-btn { font-size: 26px; cursor: pointer; color: var(--may-brown); }
+.cart-scroll-content { flex-grow: 1; overflow-y: auto; }
+
+.drawer-item { display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 1px dotted #eee; padding-bottom: 15px; }
+.drawer-item img { width: 65px; height: 85px; object-fit: cover; }
+.drawer-item-details h5 { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 400; }
+.drawer-item-details p { font-size: 12px; color: var(--may-rose); margin-top: 4px; }
+
+.drawer-footer { margin-top: 20px; }
+.total-row { display: flex; justify-content: space-between; font-weight: 600; font-size: 15px; margin-bottom: 20px; }
+
+.btn-checkout-now { 
+    width: 100%; padding: 14px; background: var(--may-brown); color: white; 
+    border: none; font-size: 12px; text-transform: uppercase; cursor: pointer; letter-spacing: 1px;
+}
+
+.body-blur-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); z-index: 1500; display: none; }
+.body-blur-overlay.active { display: block; }
+
+.main-footer { background-color: #f7f4f0; padding: 60px 20px 30px 20px; border-top: 1px solid rgba(74, 55, 51, 0.05); }
+.footer-layout { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 50px; }
+.footer-logo { font-size: 36px; font-style: italic; margin-bottom: 15px; display: block; }
+.footer-col h4 { text-transform: uppercase; font-size: 11px; letter-spacing: 2px; margin-bottom: 15px; color: #9c8682; }
+.footer-col p { font-size: 13px; margin-bottom: 8px; opacity: 0.8; }
+
+@media (max-width: 992px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .cart-drawer { width: 100%; right: -100%; }
+    .search-wrapper { width: 160px; }
+}
+@media (max-width: 576px) {
+    .header-container { flex-direction: column; gap: 10px; }
+    .product-grid { grid-template-columns: 1fr; }
 }
