@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mây Studio - Tiệm Váy Nàng Thơ</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">
+                <a href="#" class="logo-text">Mây<span>studio.</span></a>
+            </div>
+
+            <nav class="navigation">
+                <ul class="nav-level-1">
+                    <li>
+                        <a href="#danh-muc-vay" class="nav-key">Sản Phẩm</a>
+                        <ul class="nav-level-2">
+                            <li><a href="#" onclick="filterProducts('all')">Tất Cả Sản Phẩm</a></li>
+                            <li><a href="#" onclick="filterProducts('dam')">Đầm Dự Tiệc</a></li>
+                            <li><a href="#" onclick="filterProducts('bien')">Váy Đi Biển</a></li>
+                            <li><a href="#" onclick="filterProducts('chanvay')">Chân Váy</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="#san-pham-ban-chay" class="nav-key" style="color: var(--may-hot);">Bán Chạy</a>
+                    </li>
+
+                    <li>
+                        <a href="#khu-uu-dai" class="nav-key" style="color: var(--may-sale);">Giá Ưu Đãi</a>
+                        <ul class="nav-level-2">
+                            <li><a href="#khu-uu-dai">Ưu đãi mùa hạ tới 50%</a></li>
+                            <li><a href="#khu-uu-dai">Thiết kế giới hạn giảm 30%</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Tìm kiếm đầm xòe, chân váy...">
+            </div>
+
+            <div class="header-right">
+                <button class="cart-trigger" onclick="openCartDrawer()">
+                    🛒 Giỏ Hàng (<span id="cart-counter-text" style="font-weight:600;">0</span>)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="slideshow-container">
+        <div class="slide-item active" style="background-image: url('https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=1600&auto=format&fit=crop&q=80');">
+            <div class="slide-text">
+                <h2>Vạt Nắng Mong Manh</h2>
+                <p>Những thiết kế đầm lụa mềm mịn lướt trên làn da</p>
+            </div>
+        </div>
+        <div class="slide-item" style="background-image: url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=1600&auto=format&fit=crop&q=80');">
+            <div class="slide-text">
+                <h2>Tự Do & Tinh Tế</h2>
+                <p>Chân váy thô mộc nhẹ nhàng như những áng mây chiều</p>
+            </div>
+        </div>
+        <div class="slide-item" style="background-image: url('https://gcs.tripi.vn/public-tripi/tripi-feed/img/473845EXT/ni2jeidn-0qg87ghzlqiyd01iqku4dzhdhahj4k_eafojex9jiz8zywnzwvlmsco9yzng013wuhvbd9c5p-zaqy8_-7vnjoqiipi8adrhkl8f87k3ntj5qaurudtgovneamc_sdfxfzaql3egaeyv71k2obuu_wr1gnhymc6huze5lewuqfsgif47fvmg.jpg');">
+            <div class="slide-text">
+                <h2>Ký Ức Mùa Hạ</h2>
+                <p>Nơi nét dịu dàng nguyên bản được nâng niu tôn vinh</p>
+            </div>
+        </div>
+        <div class="time-progress-bar" id="slideProgress"></div>
+    </section>
+
+    <main class="section-wrapper" id="danh-muc-vay">
+        <div class="section-title-box">
+            <h2>Thiết Kế Mới Nhất</h2>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6fdd8fxz04ne0.webp" alt="Đầm">
+                </div>
+                <div class="info-box">
+                    <h3>Đầm Dress Công Chúa Dự Tiệc</h3>
+                    <div class="price-box">
+                        <span class="price-new">700,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Đầm Dress Công Chúa Dự Tiệc', 700000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6fdd8fxz04ne0.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-mb7iczsi3nbs22.webp" alt="Đầm">
+                </div>
+                <div class="info-box">
+                    <h3>Đầm Xòe Tiểu Thư Bánh Bèo</h3>
+                    <div class="price-box">
+                        <span class="price-new">300,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Đầm Xòe Tiểu Thư Bánh Bèo', 300000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-mb7iczsi3nbs22.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m0e7czi3embze5.webp" alt="Váy">
+                </div>
+                <div class="info-box">
+                    <h3>Váy Cổ Yếm</h3>
+                    <div class="price-box">
+                        <span class="price-new">350,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Váy Cổ Yếm', 350000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m0e7czi3embze5.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lrtyqjv8pw1a08.webp" alt="Váy">
+                </div>
+                <div class="info-box">
+                    <h3>Váy Cổ Yếm Hở Lưng</h3>
+                    <div class="price-box">
+                        <span class="price-new">300,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Váy Cổ Yếm Hở Lưng', 300000, 'https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lrtyqjv8pw1a08.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/sg-11134201-7rata-mb7wdfm9cqj451.webp" alt="Váy Bán Chạy">
+                </div>
+                <div class="info-box">
+                    <h3>Váy Maxi Hở Vai Đi Biển</h3>
+                    <div class="price-box">
+                        <span class="price-new">200,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Váy Maxi Hở Vai Đi Biển', 200000, 'https://down-vn.img.susercontent.com/file/sg-11134201-7rata-mb7wdfm9cqj451.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-mc936gf53wwi82.webp" alt="Váy Bán Chạy">
+                </div>
+                <div class="info-box">
+                    <h3>Váy Maxi Đi Biển</h3>
+                    <div class="price-box">
+                        <span class="price-new">350,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Váy Maxi Đi Biển', 350000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-mc936gf53wwi82.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-820l4-miqq7h04rmrk6f.webp" alt="Váy">
+                </div>
+                <div class="info-box">
+                    <h3>Váy Dự Tiệc Dáng Midi</h3>
+                    <div class="price-box">
+                        <span class="price-new">500,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Váy Dự Tiệc Dáng Midi', 500000, 'https://down-vn.img.susercontent.com/file/vn-11134207-820l4-miqq7h04rmrk6f.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lu6hhwt6g10f46.webp" alt="Váy">
+                </div>
+                <div class="info-box">
+                    <h3>Đầm Váy Maxi Dài Trễ Vai</h3>
+                    <div class="price-box">
+                        <span class="price-new">450,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Đầm Váy Maxi Dài Trễ Vai', 450000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lu6hhwt6g10f46.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7brwyb8ktzs74.webp" alt="Chân váy">
+                </div>
+                <div class="info-box">
+                    <h3>Chân Váy Midi</h3>
+                    <div class="price-box">
+                        <span class="price-new">200,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Chân Váy Midi', 200000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m7brwyb8ktzs74.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6y0fknf17qf5e.webp" alt="Chân váy">
+                </div>
+                <div class="info-box">
+                    <h3>Chân Váy Ngắn Xòe</h3>
+                    <div class="price-box">
+                        <span class="price-new">200,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Chân Váy Ngắn Xòe', 200000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6y0fknf17qf5e.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljsn3zrrks6sd3.webp" alt="Chân váy">
+                </div>
+                <div class="info-box">
+                    <h3>Chân Váy Jeans</h3>
+                    <div class="price-box">
+                        <span class="price-new">250,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Chân Váy Jeans', 250000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljsn3zrrks6sd3.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6le2x7a9enb11.webp" alt="Chân váy">
+                </div>
+                <div class="info-box">
+                    <h3>Chân Váy Jeans Chữ A</h3>
+                    <div class="price-box">
+                        <span class="price-new">250,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Chân Váy Jeans Chữ A', 250000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6le2x7a9enb11.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="section-wrapper" id="san-pham-ban-chay">
+        <div class="section-title-box">
+            <h2>Thiết Kế Bán Chạy</h2>
+            <p>Những mẫu váy được các nàng thơ yêu thích nhất tuần qua</p>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="hot-tag">BEST SELLER</div>
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m0e7czi3embze5.webp" alt="Váy">
+                </div>
+                <div class="info-box">
+                    <h3>Váy Cổ Yếm</h3>
+                    <div class="price-box">
+                        <span class="price-new">350,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Váy Cổ Yếm', 350000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ras8-m0e7czi3embze5.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="hot-tag">BEST SELLER</div>
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-820l4-miqq7h04rmrk6f.webp" alt="Váy">
+                </div>
+                <div class="info-box">
+                    <h3>Váy Dự Tiệc Dáng Midi</h3>
+                    <div class="price-box">
+                        <span class="price-new">500,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Váy Dự Tiệc Dáng Midi', 500000, 'https://down-vn.img.susercontent.com/file/vn-11134207-820l4-miqq7h04rmrk6f.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="hot-tag">BEST SELLER</div>
+                <div class="img-box">
+                    <img src="https://sg-11134201-7rata-mb7wdfm9cqj451.webp" alt="Váy Bán Chạy">
+                </div>
+                <div class="info-box">
+                    <h3>Váy Maxi Hở Vai Đi Biển</h3>
+                    <div class="price-box">
+                        <span class="price-new">200,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Váy Maxi Hở Vai Đi Biển', 200000, 'https://sg-11134201-7rata-mb7wdfm9cqj451.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="hot-tag">BEST SELLER</div>
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lu6hhwt6g10f46.webp" alt="Váy">
+                </div>
+                <div class="info-box">
+                    <h3>Đầm Váy Maxi Dài Trễ Vai</h3>
+                    <div class="price-box">
+                        <span class="price-new">450,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('Đầm Váy Maxi Dài Trễ Vai', 450000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lu6hhwt6g10f46.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-wrapper" id="khu-uu-dai" style="background-color: #fbf9f5; padding: 40px 20px; border-radius: 4px;">
+        <div class="section-title-box">
+            <h2 style="color: var(--may-sale);">Góc Ưu Đãi Giới Hạn</h2>
+            <p>Mức giảm đặc biệt dành cho nàng thơ của Mây</p>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="sale-tag">GIẢM 50%</div>
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6fdd8fxz04ne0.webp" alt="Đầm">
+                </div>
+                <div class="info-box">
+                    <h3>[Ưu Đãi] Đầm Dress Công Chúa Dự Tiệc</h3>
+                    <div class="price-box">
+                        <span class="price-new" style="color: var(--may-sale);">350,000₫</span>
+                        <span class="price-old">700,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('[Ưu Đãi] Đầm Dress Công Chúa Dự Tiệc', 350000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m6fdd8fxz04ne0.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="sale-tag">GIẢM 30%</div>
+                <div class="img-box">
+                    <img src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lu6hhwt6g10f46.webp" alt="Chân Váy">
+                </div>
+                <div class="info-box">
+                    <h3>[Ưu Đãi] Đầm Váy Maxi Dài Trễ Vai</h3>
+                    <div class="price-box">
+                        <span class="price-new" style="color: var(--may-sale);">315,000₫</span>
+                        <span class="price-old">450,000₫</span>
+                    </div>
+                    <button class="btn-add-cart" onclick="insertToCart('[Ưu Đãi] Đầm Váy Maxi Dài Trễ Vai', 315000, 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lu6hhwt6g10f46.webp')">Thêm Vào Giỏ</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="body-blur-overlay" id="bodyOverlay" onclick="closeCartDrawer()"></div>
+
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-title-area">
+            <h3>Giỏ Hàng Của Bạn</h3>
+            <span class="cart-close-btn" onclick="closeCartDrawer()">&times;</span>
+        </div>
+        <div class="cart-scroll-content" id="cartDrawerContent"></div>
+        <div class="drawer-footer">
+            <div class="total-row">
+                <span>Tổng tiền:</span>
+                <span id="cartDrawerTotal">0₫</span>
+            </div>
+            <button class="btn-checkout-now">Tiến Hành Đặt Hàng</button>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-layout">
+            <div class="footer-col">
+                <span class="footer-logo">Mây studio.</span>
+                <p>Tiệm váy lãng mạn nâng niu nét dịu dàng nguyên bản.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Liên hệ</h4>
+                <p>Hotline: 0123.456.789</p>
+                <p>Địa chỉ: Buôn Ma Thuột, Đắk Lắk</p>
+            </div>
+            <div class="footer-col">
+                <h4>Chính sách</h4>
+                <p>Đổi trả dễ dàng trong 7 ngày</p>
+                <p>Giao hàng toàn quốc</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
